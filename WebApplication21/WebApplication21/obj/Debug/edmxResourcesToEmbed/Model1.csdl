@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="hrb2_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="help">
+    <Key>
+      <PropertyRef Name="issue_id" />
+    </Key>
+    <Property Name="issue_id" Type="Int32" Nullable="false" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="issue" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="contact_no" Type="Int32" />
+    <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="customer" Relationship="hrb2_dbModel.FK__help__customer_i__403A8C7D" FromRole="help" ToRole="customer" />
+  </EntityType>
+  <EntityContainer Name="hrb2_dbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="helps" EntityType="Self.help" />
+    <EntitySet Name="med_order" EntityType="hrb2_dbModel.med_order" />
+    <EntitySet Name="admins" EntityType="hrb2_dbModel.admin" />
+    <EntitySet Name="customers" EntityType="hrb2_dbModel.customer" />
+    <AssociationSet Name="FK__help__customer_i__403A8C7D" Association="hrb2_dbModel.FK__help__customer_i__403A8C7D">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="help" EntitySet="helps" />
+    </AssociationSet>
+    <AssociationSet Name="FK__med_order__custo__49C3F6B7" Association="hrb2_dbModel.FK__med_order__custo__49C3F6B7">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="med_order" EntitySet="med_order" />
+    </AssociationSet>
+    <EntitySet Name="medicines" EntityType="hrb2_dbModel.medicine" />
+  </EntityContainer>
+  <EntityType Name="med_order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="med_id" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="amount" Type="Int32" />
+    <Property Name="mode_of_payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="order_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="customer" Relationship="hrb2_dbModel.FK__med_order__custo__49C3F6B7" FromRole="med_order" ToRole="customer" />
+  </EntityType>
+  <EntityType Name="admin">
+    <Key>
+      <PropertyRef Name="admin_id" />
+    </Key>
+    <Property Name="admin_id" Type="Int32" Nullable="false" />
+    <Property Name="admin_name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="admin_pw" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="dob" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="gender" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="emailid" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="secqn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="secans" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="Int32" Nullable="false" />
+    <Property Name="fname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="lname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="customer_uname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="customer_pw" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="secqn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="secans" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="dob" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="gender" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="contactno" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="emailid" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="helps" Relationship="hrb2_dbModel.FK__help__customer_i__403A8C7D" FromRole="customer" ToRole="help" />
+    <NavigationProperty Name="med_order" Relationship="hrb2_dbModel.FK__med_order__custo__49C3F6B7" FromRole="customer" ToRole="med_order" />
+  </EntityType>
+  <Association Name="FK__help__customer_i__403A8C7D">
+    <End Type="hrb2_dbModel.customer" Role="customer" Multiplicity="0..1" />
+    <End Type="hrb2_dbModel.help" Role="help" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="help">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__med_order__custo__49C3F6B7">
+    <End Type="hrb2_dbModel.customer" Role="customer" Multiplicity="0..1" />
+    <End Type="hrb2_dbModel.med_order" Role="med_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="med_order">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="medicine">
+    <Key>
+      <PropertyRef Name="med_id" />
+    </Key>
+    <Property Name="med_id" Type="Int32" Nullable="false" />
+    <Property Name="med_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="disease" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="mfg_date" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="exp_date" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="cost" Type="Int32" />
+    <Property Name="avail_qty" Type="Int32" />
+  </EntityType>
+</Schema>

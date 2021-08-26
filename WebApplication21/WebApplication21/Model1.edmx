@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="hrb2_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="int" Nullable="false" />
+          <Property Name="admin_name" Type="varchar" MaxLength="25" />
+          <Property Name="admin_pw" Type="varchar" MaxLength="25" />
+          <Property Name="dob" Type="varchar" MaxLength="80" />
+          <Property Name="gender" Type="varchar" MaxLength="20" />
+          <Property Name="emailid" Type="varchar" MaxLength="30" />
+          <Property Name="secqn" Type="varchar" MaxLength="50" />
+          <Property Name="secans" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="int" Nullable="false" />
+          <Property Name="fname" Type="varchar" MaxLength="25" />
+          <Property Name="lname" Type="varchar" MaxLength="25" />
+          <Property Name="customer_uname" Type="varchar" MaxLength="25" />
+          <Property Name="address" Type="varchar" MaxLength="25" />
+          <Property Name="customer_pw" Type="varchar" MaxLength="25" />
+          <Property Name="secqn" Type="varchar" MaxLength="50" />
+          <Property Name="secans" Type="varchar" MaxLength="50" />
+          <Property Name="dob" Type="varchar" MaxLength="80" />
+          <Property Name="gender" Type="varchar" MaxLength="20" />
+          <Property Name="contactno" Type="varchar" MaxLength="25" />
+          <Property Name="emailid" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="help">
+          <Key>
+            <PropertyRef Name="issue_id" />
+          </Key>
+          <Property Name="issue_id" Type="int" Nullable="false" />
+          <Property Name="customer_id" Type="int" />
+          <Property Name="issue" Type="varchar" MaxLength="80" />
+          <Property Name="description" Type="varchar" MaxLength="80" />
+          <Property Name="contact_no" Type="int" />
+          <Property Name="status" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="med_order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="customer_id" Type="int" />
+          <Property Name="med_id" Type="varchar" MaxLength="80" />
+          <Property Name="amount" Type="int" />
+          <Property Name="mode_of_payment" Type="varchar" MaxLength="50" />
+          <Property Name="order_date" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="medicine">
+          <Key>
+            <PropertyRef Name="med_id" />
+          </Key>
+          <Property Name="med_id" Type="int" Nullable="false" />
+          <Property Name="med_name" Type="varchar" MaxLength="50" />
+          <Property Name="manufacturer" Type="varchar" MaxLength="50" />
+          <Property Name="disease" Type="varchar" MaxLength="20" />
+          <Property Name="mfg_date" Type="varchar" MaxLength="20" />
+          <Property Name="exp_date" Type="varchar" MaxLength="20" />
+          <Property Name="cost" Type="int" />
+          <Property Name="avail_qty" Type="int" />
+        </EntityType>
+        <Association Name="FK__help__customer_i__403A8C7D">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="help" Type="Self.help" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="help">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__med_order__custo__49C3F6B7">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="med_order" Type="Self.med_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="med_order">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="hrb2_dbModelStoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="help" EntityType="Self.help" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="med_order" EntityType="Self.med_order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="medicine" EntityType="Self.medicine" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__help__customer_i__403A8C7D" Association="Self.FK__help__customer_i__403A8C7D">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="help" EntitySet="help" />
+          </AssociationSet>
+          <AssociationSet Name="FK__med_order__custo__49C3F6B7" Association="Self.FK__med_order__custo__49C3F6B7">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="med_order" EntitySet="med_order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="hrb2_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="help">
+          <Key>
+            <PropertyRef Name="issue_id" />
+          </Key>
+          <Property Name="issue_id" Type="Int32" Nullable="false" />
+          <Property Name="customer_id" Type="Int32" />
+          <Property Name="issue" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="contact_no" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customer" Relationship="hrb2_dbModel.FK__help__customer_i__403A8C7D" FromRole="help" ToRole="customer" />
+        </EntityType>
+        <EntityContainer Name="hrb2_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="helps" EntityType="Self.help" />
+          <EntitySet Name="med_order" EntityType="hrb2_dbModel.med_order" />
+          <EntitySet Name="admins" EntityType="hrb2_dbModel.admin" />
+          <EntitySet Name="customers" EntityType="hrb2_dbModel.customer" />
+          <AssociationSet Name="FK__help__customer_i__403A8C7D" Association="hrb2_dbModel.FK__help__customer_i__403A8C7D">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="help" EntitySet="helps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__med_order__custo__49C3F6B7" Association="hrb2_dbModel.FK__med_order__custo__49C3F6B7">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="med_order" EntitySet="med_order" />
+          </AssociationSet>
+          <EntitySet Name="medicines" EntityType="hrb2_dbModel.medicine" />
+          </EntityContainer>
+        <EntityType Name="med_order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="customer_id" Type="Int32" />
+          <Property Name="med_id" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="Int32" />
+          <Property Name="mode_of_payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="order_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customer" Relationship="hrb2_dbModel.FK__med_order__custo__49C3F6B7" FromRole="med_order" ToRole="customer" />
+        </EntityType>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="Int32" Nullable="false" />
+          <Property Name="admin_name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="admin_pw" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="dob" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="emailid" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="secqn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="secans" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
+          <Property Name="fname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="lname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="customer_uname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="customer_pw" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="secqn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="secans" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dob" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="contactno" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="emailid" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="helps" Relationship="hrb2_dbModel.FK__help__customer_i__403A8C7D" FromRole="customer" ToRole="help" />
+          <NavigationProperty Name="med_order" Relationship="hrb2_dbModel.FK__med_order__custo__49C3F6B7" FromRole="customer" ToRole="med_order" />
+        </EntityType>
+        <Association Name="FK__help__customer_i__403A8C7D">
+          <End Type="hrb2_dbModel.customer" Role="customer" Multiplicity="0..1" />
+          <End Type="hrb2_dbModel.help" Role="help" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="help">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__med_order__custo__49C3F6B7">
+          <End Type="hrb2_dbModel.customer" Role="customer" Multiplicity="0..1" />
+          <End Type="hrb2_dbModel.med_order" Role="med_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="med_order">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="medicine">
+          <Key>
+            <PropertyRef Name="med_id" />
+          </Key>
+          <Property Name="med_id" Type="Int32" Nullable="false" />
+          <Property Name="med_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="disease" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="mfg_date" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="exp_date" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cost" Type="Int32" />
+          <Property Name="avail_qty" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="hrb2_dbModelStoreContainer" CdmEntityContainer="hrb2_dbEntities">
+          <EntitySetMapping Name="helps">
+            <EntityTypeMapping TypeName="hrb2_dbModel.help">
+              <MappingFragment StoreEntitySet="help">
+                <ScalarProperty Name="issue_id" ColumnName="issue_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="issue" ColumnName="issue" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="contact_no" ColumnName="contact_no" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="med_order">
+            <EntityTypeMapping TypeName="hrb2_dbModel.med_order">
+              <MappingFragment StoreEntitySet="med_order">
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="mode_of_payment" ColumnName="mode_of_payment" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="med_id" ColumnName="med_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="hrb2_dbModel.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="secans" ColumnName="secans" />
+                <ScalarProperty Name="secqn" ColumnName="secqn" />
+                <ScalarProperty Name="emailid" ColumnName="emailid" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="admin_pw" ColumnName="admin_pw" />
+                <ScalarProperty Name="admin_name" ColumnName="admin_name" />
+                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="hrb2_dbModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="emailid" ColumnName="emailid" />
+                <ScalarProperty Name="contactno" ColumnName="contactno" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="secans" ColumnName="secans" />
+                <ScalarProperty Name="secqn" ColumnName="secqn" />
+                <ScalarProperty Name="customer_pw" ColumnName="customer_pw" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="customer_uname" ColumnName="customer_uname" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="medicines">
+            <EntityTypeMapping TypeName="hrb2_dbModel.medicine">
+              <MappingFragment StoreEntitySet="medicine">
+                <ScalarProperty Name="avail_qty" ColumnName="avail_qty" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="exp_date" ColumnName="exp_date" />
+                <ScalarProperty Name="mfg_date" ColumnName="mfg_date" />
+                <ScalarProperty Name="disease" ColumnName="disease" />
+                <ScalarProperty Name="manufacturer" ColumnName="manufacturer" />
+                <ScalarProperty Name="med_name" ColumnName="med_name" />
+                <ScalarProperty Name="med_id" ColumnName="med_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

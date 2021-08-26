@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="hrb2_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="admin">
+    <Key>
+      <PropertyRef Name="admin_id" />
+    </Key>
+    <Property Name="admin_id" Type="int" Nullable="false" />
+    <Property Name="admin_name" Type="varchar" MaxLength="25" />
+    <Property Name="admin_pw" Type="varchar" MaxLength="25" />
+    <Property Name="dob" Type="varchar" MaxLength="80" />
+    <Property Name="gender" Type="varchar" MaxLength="20" />
+    <Property Name="emailid" Type="varchar" MaxLength="30" />
+    <Property Name="secqn" Type="varchar" MaxLength="50" />
+    <Property Name="secans" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="int" Nullable="false" />
+    <Property Name="fname" Type="varchar" MaxLength="25" />
+    <Property Name="lname" Type="varchar" MaxLength="25" />
+    <Property Name="customer_uname" Type="varchar" MaxLength="25" />
+    <Property Name="address" Type="varchar" MaxLength="25" />
+    <Property Name="customer_pw" Type="varchar" MaxLength="25" />
+    <Property Name="secqn" Type="varchar" MaxLength="50" />
+    <Property Name="secans" Type="varchar" MaxLength="50" />
+    <Property Name="dob" Type="varchar" MaxLength="80" />
+    <Property Name="gender" Type="varchar" MaxLength="20" />
+    <Property Name="contactno" Type="varchar" MaxLength="25" />
+    <Property Name="emailid" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="help">
+    <Key>
+      <PropertyRef Name="issue_id" />
+    </Key>
+    <Property Name="issue_id" Type="int" Nullable="false" />
+    <Property Name="customer_id" Type="int" />
+    <Property Name="issue" Type="varchar" MaxLength="80" />
+    <Property Name="description" Type="varchar" MaxLength="80" />
+    <Property Name="contact_no" Type="int" />
+    <Property Name="status" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="med_order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="int" Nullable="false" />
+    <Property Name="customer_id" Type="int" />
+    <Property Name="med_id" Type="varchar" MaxLength="80" />
+    <Property Name="amount" Type="int" />
+    <Property Name="mode_of_payment" Type="varchar" MaxLength="50" />
+    <Property Name="order_date" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="medicine">
+    <Key>
+      <PropertyRef Name="med_id" />
+    </Key>
+    <Property Name="med_id" Type="int" Nullable="false" />
+    <Property Name="med_name" Type="varchar" MaxLength="50" />
+    <Property Name="manufacturer" Type="varchar" MaxLength="50" />
+    <Property Name="disease" Type="varchar" MaxLength="20" />
+    <Property Name="mfg_date" Type="varchar" MaxLength="20" />
+    <Property Name="exp_date" Type="varchar" MaxLength="20" />
+    <Property Name="cost" Type="int" />
+    <Property Name="avail_qty" Type="int" />
+  </EntityType>
+  <Association Name="FK__help__customer_i__403A8C7D">
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <End Role="help" Type="Self.help" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="help">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__med_order__custo__49C3F6B7">
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <End Role="med_order" Type="Self.med_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="med_order">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="hrb2_dbModelStoreContainer">
+    <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="help" EntityType="Self.help" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="med_order" EntityType="Self.med_order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="medicine" EntityType="Self.medicine" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__help__customer_i__403A8C7D" Association="Self.FK__help__customer_i__403A8C7D">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="help" EntitySet="help" />
+    </AssociationSet>
+    <AssociationSet Name="FK__med_order__custo__49C3F6B7" Association="Self.FK__med_order__custo__49C3F6B7">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="med_order" EntitySet="med_order" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
